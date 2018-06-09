@@ -11,9 +11,9 @@
     <title>Hello</title>
 </head>
 <body>
-<%--<h1>Hello ${author} !!</h1>--%>
+<h1>Hello ${author} !!</h1>
 <h2>currentTime is ${currentTime}</h2>
-<%--<h3>written by ${author} in yonyou </h3>--%>
+<h3>written by ${author} in dynamicTime </h3>
 
 </body>
 </html>
