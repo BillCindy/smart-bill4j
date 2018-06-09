@@ -30,6 +30,7 @@ hs_err_pid*
 .settings
 .project/
 .classpath/
+Servers/
 
 #maven#
-.target/
+target/
