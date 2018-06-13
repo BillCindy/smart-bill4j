@@ -18,7 +18,7 @@ public class CustomerServlet extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        // TODO: 2018/6/11  
+        // TODO: 2018/6/11
     }
 
     /**
