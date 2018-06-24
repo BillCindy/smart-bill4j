@@ -1,5 +1,5 @@
 CREATE TABLE customer (
-  id bigint(20) NOT NULL autoincrement,
+  id bigint(20) NOT NULL auto_increment,
   name VARCHAR (255) not NULL,
   contact VARCHAR (255) DEFAULT NULL,
   email VARCHAR (255) DEFAULT NULL ,
@@ -10,4 +10,4 @@ CREATE TABLE customer (
 
 INSERT INTO customer VALUES (1,'customer1','bill','18232480330','1823234994@163.com',null);
 INSERT INTO customer VALUES (2,'customer2','cindy','18232480333','1823234993@163.com',null);
-INSERT INTO customer VALUES (3,'customer3','cindy','18232480553','1823234993@123.com',null)
+INSERT INTO customer VALUES (3,'customer3','alice','18232480553','1823234993@123.com',null)

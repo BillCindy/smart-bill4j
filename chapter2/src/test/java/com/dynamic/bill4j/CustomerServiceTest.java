@@ -16,8 +16,8 @@ import java.util.Map;
 public class CustomerServiceTest {
     private final CustomerService customerService;
 
-    public CustomerServiceTest(CustomerService customerService) {
-        this.customerService = customerService;
+    public CustomerServiceTest() {
+        customerService = new CustomerService();
     }
 
     @Before
@@ -28,7 +28,7 @@ public class CustomerServiceTest {
     @Test
     public void getCustomerListTest() {
         List<Customer> customerList = customerService.getCustomerList();
-        Assert.assertEquals(2, customerList.size());
+        Assert.assertEquals(3, customerList.size());
     }
 
     @Test

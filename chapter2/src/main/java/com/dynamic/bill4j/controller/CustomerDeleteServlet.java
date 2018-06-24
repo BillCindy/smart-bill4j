@@ -7,6 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author bill
+ * @date 2018-6-23
+ */
 @WebServlet("/customer_delete")
 public class CustomerDeleteServlet extends HttpServlet {
     /**

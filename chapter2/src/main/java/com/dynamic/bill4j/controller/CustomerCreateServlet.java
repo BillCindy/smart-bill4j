@@ -7,6 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * @author bill
+ * @date 2018-6-23
+ */
 @WebServlet("/customer_create")
 public class CustomerCreateServlet extends HttpServlet{
     /**
@@ -19,7 +23,7 @@ public class CustomerCreateServlet extends HttpServlet{
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // TODO: 2018/6/11  
-        
+
     }
 
     /**

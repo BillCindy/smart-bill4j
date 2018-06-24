@@ -1,12 +1,16 @@
 package com.dynamic.bill4j.model;
 
+/**
+ * @author bill
+ * @date 2018-6-23
+ */
 public class Customer {
- private long   id;
- private String name;
- private String contact;
- private String telephone;
- private String email;
- private String remark;
+    private long id;
+    private String name;
+    private String contact;
+    private String telephone;
+    private String email;
+    private String remark;
 
     public long getId() {
         return id;
