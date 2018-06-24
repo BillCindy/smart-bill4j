@@ -33,8 +33,8 @@ public class CustomerServiceTest {
 
     @Test
     public void getCustomerTest() {
-        long Id = 1;
-        Customer customer = customerService.getCustomerById(Id);
+        long id = 1;
+        Customer customer = customerService.getCustomerById(id);
         Assert.assertNotNull(customer);
     }
 
@@ -61,8 +61,8 @@ public class CustomerServiceTest {
 
     @Test
     public void deleteCustomerTest() {
-        long Id = 1;
-        boolean result = customerService.deleteCustomer(Id);
+        long id = 1;
+        boolean result = customerService.deleteCustomer(id);
         Assert.assertTrue(result);
 
     }
