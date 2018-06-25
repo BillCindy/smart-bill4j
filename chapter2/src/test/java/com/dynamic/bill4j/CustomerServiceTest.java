@@ -1,11 +1,16 @@
 package com.dynamic.bill4j;
 
+import com.dynamic.bill4j.helper.DataBaseHelper;
 import com.dynamic.bill4j.model.Customer;
 import com.dynamic.bill4j.service.CustomerService;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -21,8 +26,15 @@ public class CustomerServiceTest {
     }
 
     @Before
-    public void init() {
+    public void init() throws IOException {
         //初始化数据库
+        String file = "sql/customer_init.sql";
+        InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(file);
+        BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+        String sql;
+        while ((sql = reader.readLine()) != null) {
+            DataBaseHelper.executeUpdate(sql);
+        }
     }
 
     @Test

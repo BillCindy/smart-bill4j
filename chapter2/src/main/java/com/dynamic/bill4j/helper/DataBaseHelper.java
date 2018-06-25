@@ -2,6 +2,7 @@ package com.dynamic.bill4j.helper;
 
 import com.dynamic.bill4j.utils.CollectionUtil;
 import com.dynamic.bill4j.utils.PropsUtil;
+import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
@@ -10,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -32,12 +32,20 @@ public class DataBaseHelper {
 
     private static final ThreadLocal<Connection> CONNECTION_THREAD_LOCAL = new ThreadLocal<>();
 
+    private static final BasicDataSource BASIC_DATA_SOURCE;
+
     static {
         Properties conf = PropsUtil.loadProps("config.properties");
         DRIVER = conf.getProperty("jdbc.driver");
         URL = conf.getProperty("jdbc.url");
         USERNAME = conf.getProperty("jdbc.username");
         PASSWORD = conf.getProperty("jdbc.password");
+
+        BASIC_DATA_SOURCE = new BasicDataSource();
+        BASIC_DATA_SOURCE.setDriverClassName(DRIVER);
+        BASIC_DATA_SOURCE.setUrl(URL);
+        BASIC_DATA_SOURCE.setUsername(USERNAME);
+        BASIC_DATA_SOURCE.setPassword(PASSWORD);
 
         try {
             Class.forName(DRIVER);
@@ -55,7 +63,7 @@ public class DataBaseHelper {
         Connection connection = CONNECTION_THREAD_LOCAL.get();
         if (connection == null) {
             try {
-                connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+                connection = BASIC_DATA_SOURCE.getConnection();
             } catch (SQLException e) {
                 LOGGER.error("get sql connection failure", e);
                 throw new RuntimeException(e);
@@ -67,22 +75,7 @@ public class DataBaseHelper {
         return connection;
     }
 
-    /**
-     * 关闭连接
-     */
-    public static void closeConnection() {
-        Connection connection = CONNECTION_THREAD_LOCAL.get();
-        if (connection != null) {
-            try {
-                connection.close();
-            } catch (SQLException e) {
 
-                throw new RuntimeException(e);
-            } finally {
-                CONNECTION_THREAD_LOCAL.remove();
-            }
-        }
-    }
 
     /**
      * 查询实体列表
@@ -101,8 +94,6 @@ public class DataBaseHelper {
         } catch (SQLException e) {
             LOGGER.error("query entity list failure ", e);
             throw new RuntimeException(e);
-        } finally {
-            closeConnection();
         }
 
         return entityList;
