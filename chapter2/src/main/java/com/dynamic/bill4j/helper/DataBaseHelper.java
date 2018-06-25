@@ -1,16 +1,20 @@
 package com.dynamic.bill4j.helper;
 
+import com.dynamic.bill4j.utils.CollectionUtil;
 import com.dynamic.bill4j.utils.PropsUtil;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;
 import org.apache.commons.dbutils.handlers.BeanListHandler;
+import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 import java.util.Properties;
 
 /**
@@ -124,4 +128,120 @@ public class DataBaseHelper {
         }
         return entity;
     }
+
+    /**
+     * 执行多表连接查询，返回listMap
+     *
+     * @param sql
+     * @param params
+     * @return
+     */
+    public static List<Map<String, Object>> executeQuery(String sql, Object... params) {
+        List<Map<String, Object>> result = null;
+        Connection connection = getConnection();
+        try {
+            result = QUERY_RUNNER.query(connection, sql, new MapListHandler(), params);
+        } catch (SQLException e) {
+            LOGGER.error("execute query failure ", e);
+            throw new RuntimeException(e);
+        }
+        return result;
+    }
+
+    //统一的更新方法,返回受影响的行
+    public static int executeUpdate(String sql, Object... params) {
+        int rows = 0;
+
+        try {
+            Connection connection = getConnection();
+            rows = QUERY_RUNNER.update(connection, sql, params);
+        } catch (SQLException e) {
+            LOGGER.error("execute update failure ", e);
+            throw new RuntimeException(e);
+        }
+        return rows;
+
+    }
+
+    /**
+     * 具体的更新方法，insert
+     *
+     * @param tEntityClass
+     * @param fieldMap
+     * @param <T>
+     * @return
+     */
+    public static <T> boolean insertEntity(Class<T> tEntityClass, Map<String, Object> fieldMap) {
+        if (CollectionUtil.isEmpty(fieldMap)) {
+            LOGGER.error("can not insert entity: fieldMap is empty");
+            return false;
+        }
+
+        String sql = "insert into " + getTableName(tEntityClass);
+        StringBuilder columns = new StringBuilder("(");
+        StringBuilder values = new StringBuilder("(");
+        for (String fieldName : fieldMap.keySet()) {
+            columns.append(fieldName).append(", ");
+            values.append("?, ");
+        }
+        columns.replace(columns.lastIndexOf(", "), columns.length(), ")");
+        values.replace(values.lastIndexOf(", "), values.length(), ")");
+        sql += columns + " values " + values;
+
+        Object[] params = fieldMap.values().toArray();
+
+        return executeUpdate(sql, params) == 1;
+    }
+
+    private static String getTableName(Class<?> tEntityClass) {
+        return tEntityClass.getSimpleName();
+    }
+
+
+    /**
+     * 具体的更新方法，update
+     *
+     * @param tEntityClass
+     * @param id
+     * @param fieldMap
+     * @param <T>
+     * @return
+     */
+
+    public static <T> boolean updateEntity(Class<T> tEntityClass, long id, Map<String, Object> fieldMap) {
+        if (CollectionUtil.isEmpty(fieldMap)) {
+            LOGGER.error("can not update entity : fieldMap is empty ");
+            return false;
+        }
+
+        String sql = "update " + getTableName(tEntityClass) + " set ";
+        StringBuilder colums = new StringBuilder();
+        for (String fieldName : fieldMap.keySet()) {
+            colums.append(fieldName).append("=?, ");
+        }
+
+        sql += colums.substring(0, colums.lastIndexOf(", ")) + " where id =?";
+
+        List<Object> paramList = new ArrayList<>();
+        paramList.addAll(fieldMap.values());
+        paramList.add(id);
+        Object[] params = paramList.toArray();
+
+        return executeUpdate(sql, params) == 1;
+
+    }
+
+    /**
+     * 具体的更新方法，delete
+     *
+     * @param tEntityClass
+     * @param id
+     * @param <T>
+     * @return
+     */
+    public static <T> boolean deleteEntity(Class<T> tEntityClass, long id) {
+        String sql = "delete from " + getTableName(tEntityClass) + " where id=?";
+        return executeUpdate(sql, id) == 1;
+    }
+
 }
