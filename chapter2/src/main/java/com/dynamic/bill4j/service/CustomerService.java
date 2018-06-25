@@ -25,8 +25,8 @@ public class CustomerService {
      */
     public Customer getCustomerById(long id) {
 
-        String sql = "select * from customer where id =" + id;
-        Customer customer = DataBaseHelper.queryEntity(Customer.class, sql);
+        String sql = "select * from customer where id =?";
+        Customer customer = DataBaseHelper.queryEntity(Customer.class, sql, id);
         return customer;
     }
 

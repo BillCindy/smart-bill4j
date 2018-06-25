@@ -10,6 +10,10 @@ import org.apache.commons.dbutils.handlers.MapListHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -139,7 +143,13 @@ public class DataBaseHelper {
         return result;
     }
 
-    //统一的更新方法,返回受影响的行
+    /**
+     * 统一的更新方法,返回受影响的行
+     *
+     * @param sql
+     * @param params
+     * @return
+     */
     public static int executeUpdate(String sql, Object... params) {
         int rows = 0;
 
@@ -152,6 +162,28 @@ public class DataBaseHelper {
         }
         return rows;
 
+    }
+
+    public static boolean executeFromSqlFile(String filePath) throws IOException {
+        // TODO: 2018/6/25 对比书上和自己写的哪里不一样？为什么？ 
+        int result = 0;
+        BufferedReader reader = null;
+        try {
+            InputStream inputStream = Thread.currentThread().getContextClassLoader().getResourceAsStream(filePath);
+            if (inputStream != null) {
+                reader = new BufferedReader(new InputStreamReader(inputStream));
+            }
+        } catch (Exception e) {
+            LOGGER.error("file not found !", e);
+        }
+        String sql;
+        if (reader != null) {
+            while ((sql = reader.readLine()) != null) {
+                result = DataBaseHelper.executeUpdate(sql);
+            }
+        }
+
+        return result == 1;
     }
 
     /**
