@@ -174,7 +174,9 @@ public class DataBaseHelper {
                 reader = new BufferedReader(new InputStreamReader(inputStream));
             }
         } catch (Exception e) {
-            LOGGER.error("file not found !", e);
+            LOGGER.error("execute sql failure  !", e);
+            throw new RuntimeException(e);
+
         }
         String sql;
         if (reader != null) {

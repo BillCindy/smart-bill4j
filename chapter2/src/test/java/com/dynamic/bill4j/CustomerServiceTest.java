@@ -61,7 +61,7 @@ public class CustomerServiceTest {
     @Test
     public void updateCustomerTest() {
         Map<String, Object> fieldMap = new HashMap<>();
-        long id = 4;
+        long id = 3;
         fieldMap.put("contact", "Eric");
         boolean result = customerService.updateCustomer(id, fieldMap);
         Assert.assertTrue(result);
@@ -70,7 +70,7 @@ public class CustomerServiceTest {
 
     @Test
     public void deleteCustomerTest() {
-        long id = 4;
+        long id = 3;
         boolean result = customerService.deleteCustomer(id);
         Assert.assertTrue(result);
 
