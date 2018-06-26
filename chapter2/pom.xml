@@ -122,5 +122,26 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>billHome</id>
+            <properties>
+                <pom.jdbc.driver>com.mysql.jdbc.Driver</pom.jdbc.driver>
+                <pom.jdbc.url><![CDATA[jdbc:mysql://localhost:3306/bill4j]]></pom.jdbc.url>
+                <pom.jdbc.username>root</pom.jdbc.username>
+                <pom.jdbc.password>root</pom.jdbc.password>
+            </properties>
+        </profile>
+        <profile>
+            <id>billCompany</id>
+            <properties>
+                <pom.jdbc.driver>com.mysql.jdbc.Driver</pom.jdbc.driver>
+                <pom.jdbc.url><![CDATA[jdbc:mysql://localhost:3306/bill4j]]></pom.jdbc.url>
+                <pom.jdbc.username>root</pom.jdbc.username>
+                <pom.jdbc.password>bill6688</pom.jdbc.password>
+            </properties>
+        </profile>
+    </profiles>
+
 
 </project>
