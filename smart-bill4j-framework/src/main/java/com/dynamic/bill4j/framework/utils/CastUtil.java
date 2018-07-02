@@ -1,4 +1,4 @@
-package bill4j.utils;
+package com.dynamic.bill4j.framework.utils;
 
 /**
  * @author bill

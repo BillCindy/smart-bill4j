@@ -1,8 +1,8 @@
-package bill4j.helper;
+package com.dynamic.bill4j.helper;
 
 
-import bill4j.utils.CollectionUtil;
-import bill4j.utils.PropsUtil;
+import com.dynamic.bill4j.utils.CollectionUtil;
+import com.dynamic.bill4j.utils.PropsUtil;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.commons.dbutils.QueryRunner;
 import org.apache.commons.dbutils.handlers.BeanHandler;

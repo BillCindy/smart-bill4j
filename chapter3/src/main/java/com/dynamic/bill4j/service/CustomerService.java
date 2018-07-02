@@ -1,8 +1,8 @@
-package bill4j.service;
+package com.dynamic.bill4j.service;
 
 
-import bill4j.helper.DataBaseHelper;
-import bill4j.model.Customer;
+import com.dynamic.bill4j.helper.DataBaseHelper;
+import com.dynamic.bill4j.model.Customer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

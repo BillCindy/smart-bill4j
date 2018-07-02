@@ -1,4 +1,4 @@
-package bill4j.utils;
+package com.dynamic.bill4j.utils;
 
 import org.apache.commons.lang3.StringUtils;
 

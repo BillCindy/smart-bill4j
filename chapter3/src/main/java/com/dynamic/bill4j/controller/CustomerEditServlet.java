@@ -1,4 +1,4 @@
-package bill4j.controller;
+package com.dynamic.bill4j.controller;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
