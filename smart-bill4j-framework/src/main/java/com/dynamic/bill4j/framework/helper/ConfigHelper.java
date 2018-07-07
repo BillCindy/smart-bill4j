@@ -34,12 +34,12 @@ public class ConfigHelper {
 
     // 获取静态资源路径
     public static String getAppAseetPath(){
-        return PropsUtil.getString(CONFIG_PROPS,ConfigConstant.APP_ASSET_PATH);
+        return PropsUtil.getString(CONFIG_PROPS, ConfigConstant.APP_ASSET_PATH, "/asset/");
     }
 
     //获取jsp路径
     public static String getAppJspPaht(){
-        return  PropsUtil.getString(CONFIG_PROPS,ConfigConstant.App_JSP_Path);
+        return PropsUtil.getString(CONFIG_PROPS, ConfigConstant.App_JSP_Path, "WEB-INF/view/");
     }
 
 }
